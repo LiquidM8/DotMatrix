@@ -1,0 +1,26 @@
+# ~/.bashrc
+# Bash configuration file
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# Enable programmable completion features (if not already enabled)
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+    . /etc/bash_completion
+fi
+
+# Source additional config files if needed
+for file in ~/.dots/shells/bash/bashrc.d/*.sh; do
+    [ -r "$file" ] && source "$file"
+done
+
+# Enable case-insensitive tab-completion
+if [[ -r ~/.dots/shells/bash/inputrc ]]; then
+    bind -f ~/.dots/shells/bash/inputrc
+else
+    # Set the option manually in case .inputrc is missing
+    bind 'set completion-ignore-case on'
+fi
+
+# Starship Config
+eval "$(starship init bash)"

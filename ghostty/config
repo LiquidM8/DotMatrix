@@ -1,0 +1,19 @@
+# Theme
+theme = light:Earthsong, dark:Duotone-Dark
+
+# Background
+background-opacity = 0.6
+background-blur = true
+
+# Fonts
+font-family = "JetBrainsMono Nerd Font Mono"
+font-size = 14
+
+# Cursor
+cursor-style = block_hollow
+cursor-style-blink = true
+mouse-hide-while-typing = true
+
+# Window
+window-padding-x = 2
+window-padding-y = 2
