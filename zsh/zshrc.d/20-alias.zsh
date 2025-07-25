@@ -31,3 +31,12 @@ nvs() {
 #work
 alias NULLR='ssh $NULLR'
 alias CH='ssh $NODE_IP -p $NODE_PORT'
+
+#servers 
+alias prox='ssh $PROX'
+alias webdev='ssh $WEBDEV -p $DPORT'
+alias mc='ssh $MINE -p $MPORT -i $CORE'
+
+
+
+
