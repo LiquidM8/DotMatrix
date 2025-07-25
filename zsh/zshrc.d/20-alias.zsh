@@ -13,7 +13,10 @@ alias c='clear'
 
 #tmuxinator
 alias startw='tmuxinator start work'
-alias stopw='tmuxinator stop work'\
+alias stopw='tmuxinator stop work'
+alias startd='tmuxinator start dev'
+alias stopd='tmuxinator stop dev'
+
 
 #Linux
 alias serial='sudo picocom -b 9600 /dev/ttyUSB0'
