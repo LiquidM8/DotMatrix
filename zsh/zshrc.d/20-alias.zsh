@@ -1,7 +1,7 @@
 # Aliases
 
 #secrets
-source $HOME/DotMatrix/.env/SECRETS
+source $HOME/GitHub/DotMatrix/.env/zsh_secrets
 
 # Colors and List
 alias ls='ls --color=auto'
@@ -21,25 +21,14 @@ alias stopd='tmuxinator stop dev'
 #Linux
 alias serial='sudo picocom -b 9600 /dev/ttyUSB0'
 
-#NVIM env
-nvs() {
-  case "$1" in
-    lazy)    ln -sfn "$HOME/LiquiVim/nvim-lazy"   "$HOME/.config/nvim" ;;
-    custom)  ln -sfn "$HOME/LiquiVim/nvim-custom" "$HOME/.config/nvim" ;;
-    *)
-      echo "Usage: nvs lazy|custom" ;;
-  esac
-}
+#Legacy Server Connections
+alias eolssh='ssh -o KexAlgorithms=+diffie-hellman-group1-sha1 -o Ciphers=+aes256-cbc -o PubkeyAcceptedKeyTypes=+ssh-rsa -o HostKeyAlgorithms=+ssh-rsa'
 
-#work
-alias NULLR='ssh $NULLR'
-alias CH='ssh $NODE_IP -p $NODE_PORT'
+# Work
+alias NULLR='ssh $ZUSER@$NULL_HOST'
+alias CH='ssh $ZUSER@$CH_NODE -p $CH_PORT'
 
-#servers 
-alias prox='ssh $PROX'
-alias webdev='ssh $WEBDEV -p $DPORT'
-alias mc='ssh $MINE -p $MPORT -i $CORE'
-
-
-
-
+# Servers
+alias prox='ssh $RUSER@$PROX'
+alias webdev='ssh $RUSER@$WEBDEV -p $PUBLIC_SSH'
+alias mc='ssh $RUSER@$MINE_HOST -p $MINE_PORT'
