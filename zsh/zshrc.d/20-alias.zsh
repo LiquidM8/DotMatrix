@@ -23,6 +23,10 @@ alias serial='sudo picocom -b 9600 /dev/ttyUSB0'
 
 #Legacy Server Connections
 alias eolssh='ssh -o KexAlgorithms=+diffie-hellman-group1-sha1 -o Ciphers=+aes256-cbc -o PubkeyAcceptedKeyTypes=+ssh-rsa -o HostKeyAlgorithms=+ssh-rsa'
+alias eolssh_test='ssh -o KexAlgorithms=+diffie-hellman-group1-sha1 \
+             -o Ciphers=+aes256-cbc \
+             -o PubkeyAcceptedKeyTypes=+ssh-dss \
+             -o HostKeyAlgorithms=+ssh-dss'
 
 # Work
 alias NULLR='ssh $ZUSER@$NULL_HOST'

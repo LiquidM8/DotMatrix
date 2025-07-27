@@ -1,8 +1,8 @@
 #NVIM env
 nvs() {
   case "$1" in
-    lazy)    ln -sfn "$HOME/LiquiVim/nvim-lazy"   "$HOME/.config/nvim" ;;
-    custom)  ln -sfn "$HOME/LiquiVim/nvim-custom" "$HOME/.config/nvim" ;;
+    lazy)    ln -sfn "$HOME/GitHub/LiquiVim/nvim-lazy"   "$HOME/.config/nvim" ;;
+    custom)  ln -sfn "$HOME/GitHub/LiquiVim/nvim-custom" "$HOME/.config/nvim" ;;
     *)
       echo "Usage: nvs lazy|custom" ;;
   esac
