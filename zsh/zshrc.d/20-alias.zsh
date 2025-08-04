@@ -30,5 +30,4 @@ alias CH='ssh $ZUSER@$CH_NODE -p $CH_PORT'
 
 # Servers
 alias prox='ssh $RUSER@$PROX'
-alias webdev='ssh $RUSER@$WEBDEV -p $PUBLIC_SSH'
-alias mc='ssh $RUSER@$MINE_HOST -p $MINE_PORT'
+alias BM='ssh $DUSER@BM -p $DPORT'

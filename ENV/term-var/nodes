@@ -1,0 +1,9 @@
+# Contains all host variables
+
+# Personal
+PROX=''
+CPANEL=''
+DEV=''
+BM=''
+
+# Work

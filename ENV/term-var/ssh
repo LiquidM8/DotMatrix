@@ -1,0 +1,9 @@
+# SSH connections and port variables
+
+# Personal
+MAIN_PORT=''
+
+
+# Work
+CH_PORT=''
+HV_PORT=''
