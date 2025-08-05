@@ -1,6 +1,6 @@
 # SSH Keychain (Optional if using Keychain for SSH agent)
 if command -v keychain &>/dev/null; then
-  eval "$(keychain --quiet --eval master id_core)"
+  eval "$(keychain --quiet --eval id_core)"
 fi
 
 load_noc() {
