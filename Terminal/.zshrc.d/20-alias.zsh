@@ -1,7 +1,7 @@
 # Aliases
 
 #secrets
-source $HOME/GitHub/DotMatrix/.env/zsh_secrets
+#source $HOME/GitHub/DotMatrix/.env/zsh_secrets
 
 # Colors and List
 alias ls='ls --color=auto'

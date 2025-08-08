@@ -4,4 +4,4 @@ export VISUAL=nvim
 export PATH="$HOME/.local/bin:$PATH"
 #export TERM=tmux-256color
 
-source $HOME/GitHub/ProbeWeaver/.venv/bin/activate
+#source $HOME/GitHub/ProbeWeaver/.venv/bin/activate
