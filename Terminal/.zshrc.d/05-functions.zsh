@@ -1,13 +1,3 @@
-#NVIM env
-nvs() {
-  case "$1" in
-    lazy)    ln -sfn "$HOME/GitHub/LiquiVim/nvim-lazy"   "$HOME/.config/nvim" ;;
-    custom)  ln -sfn "$HOME/GitHub/LiquiVim/nvim-custom" "$HOME/.config/nvim" ;;
-    *)
-      echo "Usage: nvs lazy|custom" ;;
-  esac
-}
-
 # Loads all secrets from GitRoot
 if git_root="$(git -C "$(dirname "${(%):-%x}")" rev-parse --show-toplevel 2>/dev/null)"; then
   env_dir="$git_root/.env"

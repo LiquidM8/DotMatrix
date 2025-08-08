@@ -40,3 +40,5 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
 export PS1=" %F{39}%B󰣇%b%f %1~: "
 setopt prompt_subst
+
+eval "$(starship init zsh)"
