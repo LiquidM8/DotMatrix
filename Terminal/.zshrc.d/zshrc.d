@@ -1,1 +1,0 @@
-/home/zturcheck/GitHub/DotMatrix/zsh/zshrc.d

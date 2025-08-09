@@ -33,6 +33,7 @@ unset cfg ZSHRD
 # Globbing
 setopt CORRECT                # Auto-correct commands
 setopt EXTENDED_GLOB          # Use extended globbing
+setopt NULL_GLOB              
 
 # Completions
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
@@ -42,3 +43,5 @@ export PS1=" %F{39}%B󰣇%b%f %1~: "
 setopt prompt_subst
 
 eval "$(starship init zsh)"
+
+. "$HOME/.local/share/../bin/env"

@@ -19,3 +19,5 @@ set completion-ignore-case on
 
 # Starship Config
 eval "$(starship init bash)"
+
+. "$HOME/.local/share/../bin/env"

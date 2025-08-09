@@ -1,5 +1,5 @@
 # Theme
-theme = light:Earthsong, dark:Duotone-Dark
+theme = GruvboxDark
 
 # Background
 background-opacity = 0.6

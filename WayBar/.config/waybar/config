@@ -1,0 +1,30 @@
+{
+  "clock#left": {
+    "format": "{:%H:%M:%S}",
+    "tooltip-format": "{:%Y-%m-%d}"
+  },
+  "clock#center": {
+    "format": "{:%H:%M:%S}",
+    "tooltip-format": "{:%Y-%m-%d}"
+  },
+  "clock#right": {
+    "format": "{:%H:%M:%S}",
+    "tooltip-format": "{:%Y-%m-%d}"
+  },
+  "cpu": {
+    "format": "{usage}%"
+  },
+  "layer": "top",
+  "position": "top",
+  "height": 30,
+  "modules-left": [
+    "clock#left",
+    "cpu"
+  ],
+  "modules-center": [
+    "clock#center"
+  ],
+  "modules-right": [
+    "clock#right"
+  ]
+}

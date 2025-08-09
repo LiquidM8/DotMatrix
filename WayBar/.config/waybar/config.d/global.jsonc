@@ -1,0 +1,16 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 30,
+  "modules-left": [
+    "clock#left",
+    "cpu"
+  ],
+  "modules-center": [
+    "clock#center"
+  ],
+  "modules-right": [
+    "clock#right"
+  ]
+}
+
