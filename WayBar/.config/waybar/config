@@ -77,7 +77,8 @@
     },
 
     "clock#time": {
-        "timezone": "America/New_York",
+        "format": "{:%I:%M %p}",
+        //"timezone": "America/New_York",
         "tooltip-format": "<big>{:%Z %z}</big>\n<small>Eastern Standard Time</small>",
     },
 
