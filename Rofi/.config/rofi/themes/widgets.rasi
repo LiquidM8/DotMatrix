@@ -1,0 +1,56 @@
+/* Message area (e.g., help/hints/errors) below inputbar */
+message {
+    border:       2px 0 0;
+    border-color: @separatorcolor;
+    padding:      1px;
+}
+
+textbox {
+    highlight:  @highlight;   /* selection color in textboxes */
+    text-color: @foreground;
+}
+
+/* Scrollbar on the right side of the list */
+scrollbar {
+    width:        4px;
+    border:       0;
+    handle-color: @scrollbar-handle;
+    handle-width: 8px;
+    padding:      0;
+}
+
+/* Mode buttons area (if visible) */
+mode-switcher {
+    border:       2px 0 0;
+    border-color: @separatorcolor;
+}
+
+/* Search/input row at the top */
+inputbar {
+    spacing:    0;
+    text-color: @normal-foreground;
+    padding:    2px;
+    children:   [ prompt, textbox-prompt-sep, entry, case-indicator ];
+}
+
+/* The individual widgets inside the inputbar */
+case-indicator,
+entry,
+prompt,
+button {
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+
+button.selected {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+
+/* The ":" separator between prompt and entry */
+textbox-prompt-sep {
+    expand:     false;
+    str:        ":";
+    text-color: @normal-foreground;
+    margin:     0 0.3em 0 0;
+}
