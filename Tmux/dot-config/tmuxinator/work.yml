@@ -1,0 +1,7 @@
+name: work
+root: ~
+
+windows:
+  - MAIN:
+  - CH/NULLR:
+  - SSH:

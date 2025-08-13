@@ -1,0 +1,7 @@
+name: Dev
+root: ~
+
+windows:
+  - IDE:
+  - MAIN:
+  - SSH:

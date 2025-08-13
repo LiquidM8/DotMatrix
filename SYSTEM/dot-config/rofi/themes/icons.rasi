@@ -1,0 +1,11 @@
+element {
+  /* taller rows so bigger icons fit cleanly */
+  padding: 6px 10px;
+  min-height: 52px;        /* try 44/52/64 depending on icon size */
+}
+
+element-icon {
+  size: 48px;              /* <-- icon size */
+  margin: 0 10px 0 0;      /* some space before the text */
+}
+

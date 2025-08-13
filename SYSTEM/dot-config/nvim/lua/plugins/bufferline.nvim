@@ -1,0 +1,24 @@
+-- Configuration for Bufferline.nvim plugin
+
+return {
+  "akinsho/bufferline.nvim",
+  event = "VeryLazy",
+  config = function()
+    require("bufferline").setup({
+      options = {
+        mode = "buffers",
+        numbers = "ordinal",
+        diagnostics = "nvim_lsp",
+        separator_style = "slant",
+        offsets = {
+          {
+            filetype = "NvimTree",
+            text = "File Explorer",
+            highlight = "Directory",
+            text_align = "left",
+          },
+        },
+      },
+    })
+  end,
+}
