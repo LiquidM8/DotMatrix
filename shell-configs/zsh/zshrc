@@ -39,9 +39,7 @@ setopt NULL_GLOB
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
-export PS1=" %F{39}%B󰣇%b%f %1~: "
+export PS1=" %F{39}%B%b%f  [%1~]: "
 setopt prompt_subst
 
-eval "$(starship init zsh)"
-
-. "$HOME/.local/share/../bin/env"
+#eval "$(starship init zsh)"

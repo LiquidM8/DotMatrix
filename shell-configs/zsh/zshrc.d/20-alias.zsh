@@ -1,7 +1,9 @@
 # Aliases
 
-#secrets
-#source $HOME/GitHub/DotMatrix/.env/zsh_secrets
+# Source all secret environment files
+for file in $HOME/GitHub/DotMatrix/.env/*; do
+    [ -f "$file" ] && source "$file"
+done
 
 # Colors and List
 alias ls='ls --color=auto'
@@ -11,13 +13,6 @@ alias la='ls -A'
 alias l='ls -CF'
 alias c='clear'
 
-#tmuxinator
-alias startw='tmuxinator start work'
-alias stopw='tmuxinator stop work'
-alias startd='tmuxinator start dev'
-alias stopd='tmuxinator stop dev'
-
-
 #Linux
 alias serial='sudo picocom -b 9600 /dev/ttyUSB0'
 
@@ -25,9 +20,7 @@ alias serial='sudo picocom -b 9600 /dev/ttyUSB0'
 alias eolssh='ssh -o KexAlgorithms=+diffie-hellman-group1-sha1 -o Ciphers=+aes256-cbc -o PubkeyAcceptedKeyTypes=+ssh-rsa -o HostKeyAlgorithms=+ssh-rsa'
 
 # Work
-alias NULLR='ssh $ZUSER@$NULL_HOST'
-alias CH='ssh $ZUSER@$CH_NODE -p $CH_PORT'
+alias NULLR='ssh $LOCAL_USER@$NULL_HOST'
+alias CH='ssh $LOCAL_USER@$CH_HOST -p $CH_PORT -i $HOME/.ssh/keys/RSA'
 
 # Servers
-alias prox='ssh $RUSER@$PROX'
-alias BM='ssh $DUSER@BM -p $DPORT'
