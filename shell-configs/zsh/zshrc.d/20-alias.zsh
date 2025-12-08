@@ -1,7 +1,7 @@
 # Aliases
 
 # Source all secret environment files
-for file in $HOME/GitHub/DotMatrix/.env/*; do
+for file in $HOME/Documents/GitHub/DotMatrix/.env/*; do
     [ -f "$file" ] && source "$file"
 done
 

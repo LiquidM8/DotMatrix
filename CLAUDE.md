@@ -21,12 +21,13 @@ DotMatrix is a dotfiles management repository that provides environment-ready co
   - `lazy-nvim/`: LazyVim Neovim configuration (lua-based)
   - `custom-nvim/`: Alternative custom Neovim setup
   - `ghostty/`: Ghostty terminal emulator configs
+  - `kitty/`: Kitty terminal emulator configs
   - `starship/`: Starship prompt configuration (Gruvbox theme)
   - `tmux/`: tmux configuration (prefix: C-a, mouse enabled)
 
 - **`shell-configs/`**: Shell configuration with modular loading
-  - `bash/`: Bash configs with `.bashrc` and `bashrc.d/` directory
-  - `zsh/`: ZSH configs with `.zshrc` and `zshrc.d/` directory
+  - `bash/`: Bash configs with `bashrc` and `bashrc.d/` directory
+  - `zsh/`: ZSH configs with `zshrc` and `zshrc.d/` directory
 
 - **`Themes/`**: Color schemes and wallpapers
   - `GruvBox/`: Gruvbox theme files (.conf, .css)
@@ -56,10 +57,11 @@ done
 
 ### Environment Variable System
 
-The repository uses a secret management pattern via `05-functions.zsh`:
-- Auto-detects git root and sources all files in `.env/` directory
-- Keeps sensitive variables in `.env/` (gitignored)
-- Provides templates in `ENV/` directory for reference
+The repository uses a secret management pattern:
+- **ZSH**: `05-functions.zsh` auto-detects git root and sources all `.env/` files
+- **ZSH**: `20-alias.zsh` also sources environment files from `~/GitHub/DotMatrix/.env/`
+- Keeps sensitive variables in `.env/` directory (gitignored)
+- Provides templates in `ENV/` directory for reference structure
 
 ### ZSH Plugin Management
 
@@ -81,6 +83,25 @@ All configurations use Gruvbox color scheme:
 - Starship prompt: Custom Gruvbox format with icons
 - Terminal themes: `Themes/GruvBox/`
 - Neovim: Gruvbox colorscheme plugin
+
+## Deployment
+
+This repository is transitioning from stow-based to script-based dotfile management. Currently:
+
+### Manual Deployment
+Configuration files are deployed by symlinking from the repository to appropriate locations:
+- Shell configs: `~/.bashrc` → `shell-configs/bash/bashrc`, `~/.zshrc` → `shell-configs/zsh/zshrc`
+- Modular configs: `~/.bashrc.d/` → `shell-configs/bash/bashrc.d/`, `~/.zshrc.d/` → `shell-configs/zsh/zshrc.d/`
+- App configs: `~/.config/<app>/` → `app-configs/<app>/`
+- Starship: `~/.config/starship.toml` → `app-configs/starship/starship.toml`
+- tmux: `~/.tmux.conf` → `app-configs/tmux/tmux.conf`
+
+### Environment Setup
+1. Clone repository (typically to `~/GitHub/DotMatrix`)
+2. Copy `ENV/*` templates to `.env/*` and populate with actual values
+3. Symlink desired config files to home directory
+4. For ZSH: Install `zinit` plugin manager (auto-installed on first run)
+5. For bash: Install `starship` prompt
 
 ## Development Workflow
 
@@ -112,8 +133,9 @@ The repository uses conventional directory structure for stow-style dotfile mana
 ### tmux
 - Prefix: `C-a` (not default `C-b`)
 - Mouse mode: enabled
-- Window indexing: starts at 1 (not 0)
+- Window and pane indexing: starts at 1 (not 0)
 - Auto-renumbers windows on close
+- Terminal: tmux-256color with true color support
 
 ### Starship Prompt
 - Custom Gruvbox format with powerline symbols
@@ -121,6 +143,6 @@ The repository uses conventional directory structure for stow-style dotfile mana
 - Directory truncation at 3 levels
 
 ### Shell Integrations
-- Starship prompt (bash), custom PS1 (zsh)
-- Keychain for SSH agent management
-- Case-insensitive tab completion
+- Starship prompt (bash only), custom PS1 (zsh)
+- Keychain for SSH agent management (zsh)
+- Case-insensitive tab completion (both shells)
