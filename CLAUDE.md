@@ -11,9 +11,9 @@ DotMatrix is a dotfiles management repository that provides environment-ready co
 ### Directory Structure
 
 - **`.env/`**: Environment variables (gitignored) containing host, SSH, and user variables
-  - `nodes`: Host definitions (PROX_HOST, NULL_HOST, CH_HOST)
-  - `ssh`: SSH port configurations (MAIN_PORT, CH_PORT, HV_PORT)
-  - `users`: User account variables (ROOT_USER, SERVER_USER, LOCAL_USER)
+  - `nodes`: Host definitions (PROX, CPANEL, DEV, BM, etc.)
+  - `ssh`: SSH port configurations
+  - `users`: User account variables
 
 - **`ENV/`**: Template versions of environment files (tracked in git)
 
@@ -86,22 +86,56 @@ All configurations use Gruvbox color scheme:
 
 ## Deployment
 
-This repository is transitioning from stow-based to script-based dotfile management. Currently:
+### Automated Deployment (Recommended)
 
-### Manual Deployment
-Configuration files are deployed by symlinking from the repository to appropriate locations:
-- Shell configs: `~/.bashrc` → `shell-configs/bash/bashrc`, `~/.zshrc` → `shell-configs/zsh/zshrc`
-- Modular configs: `~/.bashrc.d/` → `shell-configs/bash/bashrc.d/`, `~/.zshrc.d/` → `shell-configs/zsh/zshrc.d/`
-- App configs: `~/.config/<app>/` → `app-configs/<app>/`
-- Starship: `~/.config/starship.toml` → `app-configs/starship/starship.toml`
-- tmux: `~/.tmux.conf` → `app-configs/tmux/tmux.conf`
+Run the deployment script to automatically symlink all configurations:
+```bash
+./deploy.sh
+```
 
-### Environment Setup
+This script:
+- Creates timestamped backups of existing configs in `~/.dotfiles-backup-<timestamp>/`
+- Symlinks ZSH configs (`~/.zshrc`, `~/.zshrc.d/`)
+- Symlinks app configs (Neovim, tmux, Kitty, Starship)
+- Checks for `.env/` directory and warns if missing
+- Bash configs are commented out in the script (ZSH is primary shell)
+
+### Initial Setup
+
 1. Clone repository (typically to `~/GitHub/DotMatrix`)
-2. Copy `ENV/*` templates to `.env/*` and populate with actual values
-3. Symlink desired config files to home directory
-4. For ZSH: Install `zinit` plugin manager (auto-installed on first run)
-5. For bash: Install `starship` prompt
+2. Create environment variables:
+   ```bash
+   mkdir -p .env
+   cp ENV/nodes .env/nodes
+   cp ENV/ssh .env/ssh
+   cp ENV/users .env/users
+   # Edit files in .env/ with your actual host IPs, ports, and usernames
+   ```
+3. Run deployment script: `./deploy.sh`
+4. Reload shell: `exec zsh`
+5. On first ZSH launch, `zinit` will auto-install and set up plugins
+
+### What Gets Deployed
+
+By default, the script symlinks:
+- **ZSH**: `~/.zshrc` → `shell-configs/zsh/zshrc`, `~/.zshrc.d/` → `shell-configs/zsh/zshrc.d/`
+- **Neovim**: `~/.config/nvim/` → `app-configs/lazy-nvim/`
+- **Kitty**: `~/.config/kitty/` → `app-configs/kitty/`
+- **Starship**: `~/.config/starship.toml` → `app-configs/starship/starship.toml`
+- **tmux**: `~/.tmux.conf` → `app-configs/tmux/tmux.conf`
+
+Commented out in `deploy.sh` (uncomment if needed):
+- Bash configs (`~/.bashrc`, `~/.bashrc.d/`)
+- Ghostty terminal configs
+
+### Re-deploying or Updating Symlinks
+
+To redeploy after pulling changes or modifying `deploy.sh`:
+```bash
+./deploy.sh
+```
+
+The script automatically backs up existing configs before creating new symlinks.
 
 ## Development Workflow
 
@@ -124,9 +158,13 @@ ZSH includes custom functions for managing Python venvs:
 - `load_all_venvs`: Adds all `~/GitHub/*/.venv/bin` to PATH
 - `unload_all_venvs`: Removes loaded venv paths from PATH
 
-### Git Workflow
+### Testing Changes
 
-The repository uses conventional directory structure for stow-style dotfile management. Recent commits indicate transition from stow-based to script-based management approach.
+After modifying configurations:
+1. Changes are live immediately (configs are symlinked)
+2. For shell configs: `source ~/.zshrc` or `exec zsh`
+3. For tmux: `tmux source-file ~/.tmux.conf` or restart tmux
+4. For Neovim: Restart nvim or use `:Lazy sync` for plugin changes
 
 ## Key Configuration Details
 
