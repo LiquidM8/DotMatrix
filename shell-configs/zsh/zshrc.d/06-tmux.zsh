@@ -22,7 +22,7 @@ ssh() {
     local ssh_term="$TERM"
 
     case "$TERM" in
-        xterm-kitty|*-direct)
+        xterm-kitty|*-direct|tmux-256color)
             # Use widely compatible TERM for SSH connections
             ssh_term="xterm-256color"
             ;;
