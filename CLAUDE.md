@@ -33,8 +33,6 @@ DotMatrix is a dotfiles management repository that provides environment-ready co
   - `GruvBox/`: Gruvbox theme files (.conf, .css)
   - `Wallpapers/`: Background images
 
-- **`CustomVim/`**: Legacy vim configurations
-
 ### Configuration Loading Pattern
 
 Both bash and zsh use a modular configuration pattern:
@@ -47,21 +45,28 @@ done
 ```
 
 **ZSH**: Sources all `.zsh` files from `~/.zshrc.d/` with numeric prefixes for load order
-- `00-env.zsh`: Environment variables (EDITOR, PATH)
-- `05-functions.zsh`: Custom functions including venv management
-- `06-tmux.zsh`: tmux integration
+- `00-env.zsh`: Environment variables (EDITOR, PATH) and ProbeWeaver venv activation
+- `05-functions.zsh`: Custom functions including venv management and git-root env loading
+- `06-tmux.zsh`: TERM handling and SSH wrapper for network device compatibility
 - `10-history.zsh`: History settings
 - `20-alias.zsh`: Command aliases
 - `30-keychain.zsh`: SSH keychain integration
 - `99-gh.zsh`: GitHub CLI completions
 
+**Load Order Significance**:
+- Files are loaded alphabetically, so numeric prefixes control execution order
+- `00-env.zsh` loads first (environment variables needed by other modules)
+- `05-functions.zsh` loads early (functions used in later modules)
+- `99-gh.zsh` loads last (GitHub CLI completions, less critical)
+
 ### Environment Variable System
 
-The repository uses a secret management pattern:
-- **ZSH**: `05-functions.zsh` auto-detects git root and sources all `.env/` files
-- **ZSH**: `20-alias.zsh` also sources environment files from `~/GitHub/DotMatrix/.env/`
-- Keeps sensitive variables in `.env/` directory (gitignored)
-- Provides templates in `ENV/` directory for reference structure
+The repository uses an intelligent secret management pattern:
+- **Git Root Detection**: `05-functions.zsh` auto-detects the git repository root and sources all files from `<git-root>/.env/`
+- This works from any directory within the DotMatrix git repository
+- Only readable files in `.env/` directory are sourced
+- `.env/` directory is gitignored for security
+- `ENV/` directory provides templates for reference structure
 
 ### ZSH Plugin Management
 
@@ -99,6 +104,19 @@ This script:
 - Symlinks app configs (Neovim, tmux, Kitty, Starship)
 - Checks for `.env/` directory and warns if missing
 - Bash configs are commented out in the script (ZSH is primary shell)
+
+### Prerequisites
+
+Before deploying DotMatrix configurations:
+1. ProbeWeaver repository must be cloned to `~/Documents/GitHub/ProbeWeaver/`
+2. ProbeWeaver's Python virtual environment must be created:
+   ```bash
+   cd ~/Documents/GitHub/ProbeWeaver
+   python3 -m venv .venv
+   source .venv/bin/activate
+   pip install -e ".[dev]"
+   ```
+3. `zinit` will auto-install on first ZSH launch (no manual installation needed)
 
 ### Initial Setup
 
@@ -181,6 +199,69 @@ After modifying configurations:
 - Directory truncation at 3 levels
 
 ### Shell Integrations
-- Starship prompt (bash only), custom PS1 (zsh)
+- Starship prompt available but currently disabled in ZSH (custom PS1 used instead)
+- Starship can be enabled by uncommenting `eval "$(starship init zsh)"` in zshrc
+- Custom ZSH PS1: ` [<directory>]: ` with cyan formatting
 - Keychain for SSH agent management (zsh)
 - Case-insensitive tab completion (both shells)
+
+### Cross-Project Integration
+
+**ProbeWeaver Virtual Environment**: The ZSH configuration automatically activates the ProbeWeaver Python virtual environment in `00-env.zsh`:
+```zsh
+source $HOME/Documents/GitHub/ProbeWeaver/.venv/bin/activate
+```
+This means:
+- ProbeWeaver CLI tools (`weaver`/`probeweaver`) are immediately available in the shell
+- Requires ProbeWeaver repository to exist at `~/Documents/GitHub/ProbeWeaver/`
+- Requires ProbeWeaver's `.venv` to be created before deploying DotMatrix configs
+- If you don't use ProbeWeaver, comment out line 6 in `shell-configs/zsh/zshrc.d/00-env.zsh`
+
+### SSH and TERM Compatibility
+
+The `06-tmux.zsh` module provides intelligent TERM handling:
+- **Inside tmux**: Sets `TERM=tmux-256color`
+- **Outside tmux**: Preserves Kitty's native `xterm-kitty` or defaults to `xterm-256color`
+- **SSH wrapper**: Automatically downgrades TERM for compatibility
+  - `xterm-kitty`, `tmux-256color`, and `*-direct` become `xterm-256color` for SSH
+  - Network devices (cisco, juniper, switch, router) get `xterm` for maximum compatibility
+  - Override with `TERM_SAFE` environment variable if needed
+
+This prevents broken characters and display issues when SSHing to servers and network devices.
+
+## Troubleshooting
+
+### ProbeWeaver venv activation fails
+
+If you see errors when starting ZSH about ProbeWeaver's venv:
+1. Ensure ProbeWeaver repository exists at `~/Documents/GitHub/ProbeWeaver/`
+2. Create the virtual environment:
+   ```bash
+   cd ~/Documents/GitHub/ProbeWeaver
+   python3 -m venv .venv
+   source .venv/bin/activate
+   pip install -e ".[dev]"
+   ```
+3. If you don't use ProbeWeaver, comment out line 6 in `shell-configs/zsh/zshrc.d/00-env.zsh`
+
+### SSH to network devices shows broken characters
+
+This is a TERM compatibility issue. The `06-tmux.zsh` module should automatically handle this by downgrading TERM for SSH connections to network devices. If issues persist:
+- Set `TERM_SAFE=xterm` before SSH
+- Ensure hostnames contain keywords like "cisco", "juniper", "switch", or "router" for automatic detection
+- Manually set TERM: `TERM=xterm ssh user@device`
+
+### Environment variables not loading
+
+If your environment variables from `.env/` aren't being sourced:
+- Check that `.env/` directory exists in the DotMatrix repository root
+- Verify files in `.env/` are readable: `ls -la .env/`
+- Ensure you're in or below the git repository directory when starting the shell
+- The git-root detection in `05-functions.zsh` only works within the DotMatrix git repository
+
+### Zinit plugins not loading
+
+On first run, zinit auto-installs. If plugins aren't working:
+- Verify zinit installed: `ls -la ~/.local/share/zinit/`
+- Manually trigger installation: `exec zsh`
+- Check zinit status: `zinit status`
